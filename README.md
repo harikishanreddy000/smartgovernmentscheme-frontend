@@ -1,18 +1,34 @@
-# React + Vite
+# Sahaaya government scheme checker
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A responsive React/Vite eligibility-discovery frontend for Indian government schemes. It connects to the Spring Boot API in `../backend/smart-government-scheme`.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+From this directory:
 
-## React Compiler
+```sh
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Start the API from `../backend/smart-government-scheme` with `./mvnw spring-boot:run`, then run the Vite app from this directory with `npm install` and `npm run dev`. Open the Vite URL printed in the terminal (normally `http://localhost:5173`).
 
-## Expanding the Oxlint configuration
+## About the eligibility preview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
-# smartgovernmentscheme-frontend
-# smartgovernmentscheme-frontend
+The frontend loads the catalogue from `GET /api/schemes` and submits the questionnaire to `POST /api/eligibility/check`. Configure a different API origin with `VITE_API_BASE_URL` at build/dev time. The backend defaults to `http://localhost:8080` and allows the frontend at `http://localhost:5173` by default. Set `FRONTEND_ORIGIN` on the backend if the frontend origin differs.
+
+The sample backend processes each profile in memory for that request only and does not store it. The returned matches are informational screening, not official eligibility decisions; verify current criteria, availability, and applications at linked government portals. Catalogue fallback data is used only if the API cannot be reached, and the UI displays an offline notice.
+
+## Included
+
+- Responsive citizen-portal dashboard and two-step eligibility questionnaire.
+- Backend-powered screening for a small sample of central schemes, with transparent match/review labels.
+- Searchable, category-filtered scheme catalogue, official source links, and saved shortlist.
+- Privacy, eligibility, and information-accuracy disclaimers throughout.
+
+The saved shortlist is stored in this browser's local storage; questionnaire answers are sent to the API for screening but are not stored by the sample backend.
+
+## Checks
+
+- `npm run build` — production build
+- `npm run lint` — Oxlint
